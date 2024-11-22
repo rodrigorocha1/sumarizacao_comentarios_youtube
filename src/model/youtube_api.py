@@ -13,7 +13,8 @@ class YoutubeService():
         self.__api_key = os.environ['YOUTUBE_API_KEY']
         self.__youtube = build('youtube', 'v3', developerKey=self.__api_key)
 
-    def buscar_comentarios(self, id_video: str):
+    def buscar_comentarios(self, id_video: str) -> Generator[Tuple[str, str, str, str]]:
+
         flag_token = True
         token = ''
         while flag_token:
