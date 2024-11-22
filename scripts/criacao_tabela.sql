@@ -2,15 +2,16 @@ CREATE  table canais (
 	id_canal string PRIMARY KEY,
 	nome_canal string
 	
-)
+);
 
 
 CREATE table videos (
 	id_video string PRIMARY KEY,
 	id_canal string,
+	titulo_video_string,
 	comentario_sumarizado string,
 	FOREIGN KEY(id_canal) REFERENCES canais (id_canal)
-)
+);
 
 
 
@@ -23,7 +24,7 @@ CREATE table comentarios (
 	data_publicacao string,
 	data_atualizacao string,
 	FOREIGN KEY(id_video) REFERENCES videos (id_video)
-)
+);
 
 
 CREATE table resposta_comentarios (
@@ -31,7 +32,8 @@ CREATE table resposta_comentarios (
 	id_comentario string,
 	usuario string,
 	resposta_comentario string,
+	resposta_comentario_atualizado string,
 	data_publicacao string,
 	data_atualizacao string,
 	FOREIGN KEY(id_comentario) REFERENCES comentarios (id_comentario)
-)
+);
