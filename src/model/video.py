@@ -4,7 +4,7 @@ from sqlalchemy.orm import mapped_column, Mapped
 
 
 class Video(Base):
-    __tablename = 'Videos'
+    __tablename__ = 'Videos'
 
     id_video: Mapped[str] = mapped_column(
         String,
