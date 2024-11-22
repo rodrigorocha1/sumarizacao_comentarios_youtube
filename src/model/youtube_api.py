@@ -18,9 +18,9 @@ class YoutubeService():
         token = ''
         while flag_token:
             request = self.__youtube.commentThreads().list(
-                part="snippet",
+                part='snippet',
                 videoId=id_video,
-                textFormat="plainText",
+                textFormat='plainText',
                 pageToken=token,
             )
             response = request.execute()
@@ -32,6 +32,30 @@ class YoutubeService():
                 data_atualizacao = item['snippet']['topLevelComment']['snippet']['updatedAt']
 
                 yield id_comentario, texto_comentario, autor_comentario, data_publicacao, data_atualizacao
+            try:
+                token = response['nextPageToken']
+                flag_token = True
+            except KeyError:
+                flag_token = False
+
+    def buscar_resposta_comentarios(self, id_comentario_parente: str):
+        flag_token = True
+        token = ''
+        while flag_token:
+            request = self.__youtube.comments().list(
+                part='snippet',
+                parentId=id_comentario_parente,
+                textFormat='plainText',
+                pageToken=token
+            )
+            response = request.execute()
+            for item in response['items']:
+                id_resposta_comentario = item['id'].split('.')[-1]
+                texto_resposta_comentario = item['snippet']['textOriginal']
+                autor_resposta_comentario = item['snippet']['authorDisplayName']
+                data_publicacao = item['snippet']['publishedAt']
+                data_atualizacao = item['snippet']['updatedAt']
+                yield (id_resposta_comentario, texto_resposta_comentario, autor_resposta_comentario, data_atualizacao, data_publicacao)
             try:
                 token = response['nextPageToken']
                 flag_token = True
