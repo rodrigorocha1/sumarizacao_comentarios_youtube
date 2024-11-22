@@ -6,11 +6,11 @@ from sqlalchemy.orm import mapped_column, Mapped
 class Video(Base):
     __tablename = 'Videos'
 
-    id_video: Mapped[String] = mapped_column(
+    id_video: Mapped[str] = mapped_column(
         String,
         primary_key=True
     )
-    id_canal: Mapped[String] = mapped_column(
+    id_canal: Mapped[str] = mapped_column(
         String,
         ForeignKey('Canais.id_canal')
 
