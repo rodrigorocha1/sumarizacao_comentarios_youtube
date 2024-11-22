@@ -62,3 +62,12 @@ class YoutubeService():
                 flag_token = True
             except KeyError:
                 flag_token = False
+
+    def obter_detalhes_video(self, id_video: str):
+        request = self.__youtube.videos().list(
+            part='snippet',
+            id=id_video
+        )
+        response = request.execute()
+        if 'items' in response and response['items']:
+            return response['items'][0]['snippet']['tittle'], response['items'][0]['snippet']['channelId']
