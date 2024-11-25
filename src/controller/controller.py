@@ -20,11 +20,31 @@ class Controller:
         """
         if self.__video_model.selecionar_video(id_video=id_video):
             return True
-        return False
+        else:
+            dados_video = self.__youtube_service.obter_detalhes_video(
+                id_video=id_video
+            )
+            self.__canal_model.inserir_canal(
+                id_canal=dados_video[1],
+                nome_canal=dados_video[2]
+            )
+
+            return False
 
     def inserir_dados(self, id_video: str):
-        dados_video = self.__youtube_service.obter_detalhes_video(
-            id_video=id_video
-        )
-        # Verificar se o canal existe
-        self.__canal_model.inserir_canal()
+        # dados_video = self.__youtube_service.obter_detalhes_video(
+        #     id_video=id_video
+        # )
+        # # Verificar se o canal existe
+
+        # canal =
+        # self.__canal_model.inserir_canal(
+        #     id_canal=dados_video[1],
+        #     nome_canal=dados_video[2]
+        # )
+        # if canal:
+        #     comentarios = self.__youtube_service
+        #     self.__video_model.inserir_video(
+        #         id_video=id_video,
+
+        #     )
