@@ -13,7 +13,7 @@ class YoutubeService():
         self.__api_key = os.environ['YOUTUBE_API_KEY']
         self.__youtube = build('youtube', 'v3', developerKey=self.__api_key)
 
-    def buscar_comentarios(self, id_video: str) -> Generator[Tuple[str, str, str, str]]:
+    def buscar_comentarios(self, id_video: str) -> Generator[Tuple[str, str, str, str], None, None]:
 
         flag_token = True
         token = ''
@@ -32,7 +32,7 @@ class YoutubeService():
                 data_publicacao = item['snippet']['topLevelComment']['snippet']['publishedAt']
                 data_atualizacao = item['snippet']['topLevelComment']['snippet']['updatedAt']
 
-                yield id_comentario, texto_comentario, autor_comentario, data_publicacao, data_atualizacao
+                yield (id_comentario, texto_comentario, autor_comentario, data_publicacao, data_atualizacao)
             try:
                 token = response['nextPageToken']
                 flag_token = True
@@ -78,4 +78,4 @@ class YoutubeService():
         )
         response = request.execute()
         if 'items' in response and response['items']:
-            return response['items'][0]['snippet']['tittle'], response['items'][0]['snippet']['channelId'], response['items'][0]['snippet']['channelTitle']
+            return response['items'][0]['snippet']['title'], response['items'][0]['snippet']['channelId'], response['items'][0]['snippet']['channelTitle']

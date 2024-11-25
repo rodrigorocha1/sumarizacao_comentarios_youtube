@@ -44,5 +44,6 @@ class VideoModel:
         video = sessao.query(Video).filter(
             Video.id_video == id_video
         ).first()
+        print(video)
         sessao.close()
-        return video.titulo_video_string
+        return video

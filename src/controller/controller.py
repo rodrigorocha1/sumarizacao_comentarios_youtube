@@ -30,7 +30,7 @@ class Controller:
             )
             return False
 
-    def inserir_dados(self, id_video: str):
+    # def inserir_dados(self, id_video: str):
         # dados_video = self.__youtube_service.obter_detalhes_video(
         #     id_video=id_video
         # )
