@@ -18,7 +18,7 @@ class VideoModel:
             id_video (str): id do vídeo
             id_canal (str): id canal
             titulo_video_string (str): título do vídeo
-            comentario_sumarizado (str): comentário sumarizado
+            comentario_sumarizado (str): comentário
         """
         sessao = self.obter_sessao()
         video = Video(
@@ -31,6 +31,10 @@ class VideoModel:
         sessao.commit()
         sessao.close()
 
-    # def selecionar_canal(self, id_video: str):
-    #     sessao = self.obter_sessao()
-    #     video = Video()
+    def selecionar_video(self, id_video: str) -> str:
+        sessao = self.obter_sessao()
+        video = sessao.query(Video).filter(
+            Video.id_video == id_video
+        ).first()
+        sessao.close()
+        return video.titulo_video_string

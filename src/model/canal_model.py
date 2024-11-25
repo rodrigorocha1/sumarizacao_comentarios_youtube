@@ -1,3 +1,4 @@
+from typing import Optional
 from src.model.canais import Canais
 from src.model.conexao_banco import ConexaoBanco
 from sqlalchemy.orm.session import Session
@@ -24,3 +25,15 @@ class CanalModel:
         sessao.add(canais)
         sessao.commit()
         sessao.close()
+
+    def selecionar_canal_id(self, id_canal: str) -> Optional[str]:
+        sessao = self.obter_sessao()
+        canal = sessao.query(
+            Canais
+        ).filter(
+            Canais.id_canal == id_canal
+        ).first()
+
+        if canal:
+            return str(canal.id_canal)
+        return None

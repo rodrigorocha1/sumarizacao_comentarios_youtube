@@ -19,14 +19,18 @@ class DashboardView:
         botao_pesquisar = st.button('Recuperar comentários')
         if botao_pesquisar:
             id_video = url.split('=')[1].split('&')[0]
-            # Verificar se o vídeo existe
+
             with st.status('Pesquisando URL') as status:
                 st.write('Pesquisando url')
-                sleep(2)
-                status.update(
-                    label='Pesquisa terminada',
-                    state='complete'
-                )
+                if self.__controller.verificar_video_cadastrado(id_video=id_video):
+                    st.info('URL com o vídeo já cadastrada')
+                else:
+                    pass
+                    sleep(2)
+                    status.update(
+                        label='Pesquisa terminada',
+                        state='complete'
+                    )
 
                 st.write(url)
 
