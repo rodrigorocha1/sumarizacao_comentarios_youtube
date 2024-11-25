@@ -63,7 +63,15 @@ class YoutubeService():
             except KeyError:
                 flag_token = False
 
-    def obter_detalhes_video(self, id_video: str):
+    def obter_detalhes_video(self, id_video: str) -> Tuple[str, str]:
+        """Método para recuperar dados canal
+
+        Args:
+            id_video (str): id do vídeo
+
+        Returns:
+            Tuple[str, str]: tupla com o título do vídeo e id do canal
+        """
         request = self.__youtube.videos().list(
             part='snippet',
             id=id_video
