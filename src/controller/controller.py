@@ -28,7 +28,6 @@ class Controller:
                 id_canal=dados_video[1],
                 nome_canal=dados_video[2]
             )
-
             return False
 
     def inserir_dados(self, id_video: str):
