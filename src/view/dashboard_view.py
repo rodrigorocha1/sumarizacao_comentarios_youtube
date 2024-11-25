@@ -18,6 +18,8 @@ class DashboardView:
         url = st.text_input('Digite a url do vídeo')
         botao_pesquisar = st.button('Recuperar comentários')
         if botao_pesquisar:
+            id_video = url.split('=')[1].split('&')[0]
+            # Verificar se o vídeo existe
             with st.status('Pesquisando URL') as status:
                 st.write('Pesquisando url')
                 sleep(2)
