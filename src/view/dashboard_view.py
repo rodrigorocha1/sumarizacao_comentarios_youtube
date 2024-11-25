@@ -1,5 +1,6 @@
 import streamlit as st
 from time import sleep
+from src.controller.controller import Controller
 
 
 class DashboardView:
@@ -9,7 +10,7 @@ class DashboardView:
     )
 
     def __init__(self):
-        pass
+        self.__controller = Controller()
 
     def gerar_layout_titulo(self):
         st.header('Sumarização Comentários youtube')
@@ -17,18 +18,15 @@ class DashboardView:
         url = st.text_input('Digite a url do vídeo')
         botao_pesquisar = st.button('Recuperar comentários')
         if botao_pesquisar:
-            if len(url) > 0:
-                with st.status('Pesquisando URL') as status:
-                    st.write('Pesquisando url')
-                    sleep(2)
-                    status.update(
-                        label='Pesquisa terminada',
-                        state='complete'
-                    )
-                    url = url.split('=')[1].split('&')[0]
-                    st.write(url)
-            else:
-                st.warning('Formato da url Invalida')
+            with st.status('Pesquisando URL') as status:
+                st.write('Pesquisando url')
+                sleep(2)
+                status.update(
+                    label='Pesquisa terminada',
+                    state='complete'
+                )
+
+                st.write(url)
 
     def rodar_dashboard(self):
         self.gerar_layout_titulo()
