@@ -32,6 +32,14 @@ class VideoModel:
         sessao.close()
 
     def selecionar_video(self, id_video: str) -> str:
+        """Método para selecionar vídeo id
+
+        Args:
+            id_video (str): id do vídeo
+
+        Returns:
+            str: título do vídeo
+        """
         sessao = self.obter_sessao()
         video = sessao.query(Video).filter(
             Video.id_video == id_video
