@@ -18,7 +18,7 @@ class Controller:
         Returns:
             bool: True se o vídeo está cadastrado false caso contrário
         """
-        if self.__video_model.selecionar_video(id_video=id_video):
+        if not self.__video_model.selecionar_video(id_video=id_video):
             return True
         else:
             dados_video = self.__youtube_service.obter_detalhes_video(
