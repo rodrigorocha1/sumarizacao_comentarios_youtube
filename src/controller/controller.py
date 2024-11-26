@@ -63,3 +63,10 @@ class Controller:
                     data_publicacao=dados_comentarios[3]
                 )
             else:
+                self.__comentarios_model.atualizar_comentario(
+                    id_comentario=dados_comentarios[0],
+                    comentario_atualizado=dados_comentarios[3],
+                    data_atualizacao=dados_comentarios[4]
+                )
+
+    # def tratar_dados_resposta_comentarios
