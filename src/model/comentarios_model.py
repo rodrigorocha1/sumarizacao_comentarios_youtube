@@ -12,7 +12,7 @@ class ComentariosModel:
     def obter_sessao(self) -> Session:
         return self.__db.obter_sessao()
 
-    def inserir_comentarios(self, id_comentario: str, id_video: str, usuario: str, comentario: str, comentario_atualizado: str, data_publicacao: str, data_atualizacao: str):
+    def inserir_comentarios(self, id_comentario: str, id_video: str, usuario: str, comentario: str, comentario_atualizado: str, data_publicacao: str, data_atualizacao: str, ):
         """Método para inserir comentários
 
         Args:
@@ -48,3 +48,13 @@ class ComentariosModel:
         ).first()
         sessao.close()
         return comentarios
+
+    def atualizar_comentario(self, id_comentario: str, comentario_atualizado: str, data_atualizacao: str):
+        sessao = self.obter_sessao()
+        comentario = sessao.query(
+            Comentarios
+        ).filter(
+            Comentarios.id_comentario == id_comentario
+        ).first()
+        comentario.comentario_atualizado = comentario_atualizado
+        comentario.data_atualizacao = data_atualizacao

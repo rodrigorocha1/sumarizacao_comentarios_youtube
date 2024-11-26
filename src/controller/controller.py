@@ -48,4 +48,18 @@ class Controller:
         )
 
     def tratar_dados_comentarios(self, id_video: str):
-        for dados_videos in self.__youtube_service.buscar_comentarios(id_video=id_video):
+        for dados_videos_comentarios in self.__youtube_service.buscar_comentarios(id_video=id_video):
+            dados_comentarios = self.__comentarios_model.selecionar_comentarios(
+                id_comentario=dados_videos_comentarios[0]
+            )
+            if dados_videos_comentarios is not None:
+                self.__comentarios_model.inserir_comentarios(
+                    id_comentario=dados_comentarios[0],
+                    id_video=id_video,
+                    usuario=dados_comentarios[3],
+                    comentario=dados_comentarios[2],
+                    comentario_atualizado=None,
+                    data_atualizacao=dados_comentarios[4],
+                    data_publicacao=dados_comentarios[3]
+                )
+            else:
