@@ -32,6 +32,17 @@ class RespostaComentariosModel:
             RespostaComentarios
         ).filter(
             RespostaComentarios.id_resposta_comentario == id_resposta_comentarios
-        ).first()
+        ).all()
         sessao.close()
         return resultado_resposta_comentarios
+
+    def atualizar_resposta_comentarios(self, id_resposta_comentario: str, resposta_comentario_atualizado: str, data_atualizacao: str):
+        sessao = self.obter_sessao()
+        resposta_comentarios = sessao.query(
+            RespostaComentarios
+        ).filter(
+            RespostaComentarios.id_resposta_comentario == id_resposta_comentario
+        ).first()
+
+        resposta_comentarios.resposta_comentario_atualizado
+        resposta_comentarios.data_atualizacao = data_atualizacao

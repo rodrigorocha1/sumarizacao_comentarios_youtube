@@ -47,6 +47,14 @@ class YoutubeService():
                 flag_token = False
 
     def buscar_resposta_comentarios(self, id_comentario_parente: str) -> Generator[Tuple[str, str, str, str, str], None, None]:
+        """Método para buscar resposta do comentários
+
+        Args:
+            id_comentario_parente (str): id do comentário
+
+        Yields:
+            Generator[Tuple[str, str, str, str, str], None, None]: tupla com id_resposta_comentario, texto_resposta_comentario, autor_resposta_comentario, data_atualizacao , data_publicacao 
+        """
         flag_token = True
         token = ''
         while flag_token:

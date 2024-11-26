@@ -3,6 +3,7 @@ from src.model.youtube_api import YoutubeService
 from src.model.video_model import VideoModel
 from src.model.canal_model import CanalModel
 from src.model.comentarios_model import ComentariosModel
+from src.model.resposta_comentarios_model import RespostaComentariosModel
 
 
 class Controller:
@@ -11,6 +12,7 @@ class Controller:
         self.__video_model = VideoModel()
         self.__canal_model = CanalModel()
         self.__comentarios_model = ComentariosModel()
+        self.__resposta_comentarios = RespostaComentariosModel()
 
     def verificar_video_cadastrado(self, id_video: str) -> Union[bool, list]:
         """Método para verificar vídeo cadastrado
@@ -70,4 +72,27 @@ class Controller:
                     data_atualizacao=dados_comentarios[4]
                 )
 
-    # def tratar_dados_resposta_comentarios
+    def tratar_dados_resposta_comentarios(self, id_video: str):
+        comentarios = self.__comentarios_model.selecionar_comentarios(
+            flag=2,
+            id_video=id_video,
+            id_comentario=None
+        )
+        for comentario in comentarios:
+            dados_resp_comentarios = self.__youtube_service.buscar_resposta_comentarios(
+                id_comentario_parente=comentario.id_comentario
+            )
+            resultado_consulta_resposta = self.__resposta_comentarios.selecionar_resposta_comentarios(
+                id_resposta_comentarios=dados_resp_comentarios[0]
+            )
+            if resultado_consulta_resposta is not None:
+                self.__resposta_comentarios.inserir_resposta_comentarios(
+                    id_resposta_comentario=dados_resp_comentarios[0],
+                    data_atualizacao=dados_resp_comentarios[3],
+                    data_publicacao=dados_resp_comentarios[4],
+                    id_comentario=comentario.id_comentario,
+                    resposta_comentario=dados_resp_comentarios[1],
+                    resposta_comentario_atualizado=None,
+                    usuario=dados_resp_comentarios[2]
+                )
+            else:
