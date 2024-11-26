@@ -2,6 +2,7 @@ from typing import Union
 from src.model.youtube_api import YoutubeService
 from src.model.video_model import VideoModel
 from src.model.canal_model import CanalModel
+from src.model.comentarios_model import ComentariosModel
 
 
 class Controller:
@@ -9,6 +10,7 @@ class Controller:
         self.__youtube_service = YoutubeService()
         self.__video_model = VideoModel()
         self.__canal_model = CanalModel()
+        self.__comentarios_model = ComentariosModel()
 
     def verificar_video_cadastrado(self, id_video: str) -> Union[bool, list]:
         """Método para verificar vídeo cadastrado
@@ -31,7 +33,7 @@ class Controller:
                 id_canal=dados_video[0],
                 nome_canal=dados_video[2]
             )
-            return dados_video
+            return dados_video_banco, dados_video
 
         else:
             return False
@@ -44,3 +46,6 @@ class Controller:
             titulo_video=dados_video[2],
             comentario_sumarizado=None
         )
+
+    def tratar_dados_comentarios(self, id_video: str):
+        for dados_videos in self.__youtube_service.buscar_comentarios(id_video=id_video):

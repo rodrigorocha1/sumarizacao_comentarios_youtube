@@ -14,7 +14,14 @@ class YoutubeService():
         self.__youtube = build('youtube', 'v3', developerKey=self.__api_key)
 
     def buscar_comentarios(self, id_video: str) -> Generator[Tuple[str, str, str, str, str], None, None]:
+        """Gerador para retornar os dados dos comentários
 
+        Args:
+            id_video (str): id do vídeo
+
+        Yields:
+            Generator[Tuple[str, str, str, str, str], None, None]: gerador com id comentário, texto comentários, autor comentário, data públicação, data atualização
+        """
         flag_token = True
         token = ''
         while flag_token:

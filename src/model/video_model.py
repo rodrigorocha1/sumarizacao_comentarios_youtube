@@ -52,6 +52,5 @@ class VideoModel:
             Video.id_video == id_video
         ).first()
         sessao.close()
-        print(video)
 
         return video
