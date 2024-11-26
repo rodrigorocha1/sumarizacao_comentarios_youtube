@@ -15,10 +15,13 @@ class Video(Base):
         ForeignKey('Canais.id_canal')
 
     )
-    titulo_video_string: Mapped[String] = mapped_column(String)
+    titulo_video: Mapped[str] = mapped_column(
+        String
+    )
+
     comentario_sumarizado: Mapped[String] = mapped_column(String)
 
     def __repr__(self):
         return (
-            f'Videos[id_video={self.id_video},id_canal={self.id_canal}, titulo_video={self.titulo_video_string}, comentario_sumarizado={self.comentario_sumarizado}]'
+            f'Videos[id_video={self.id_video},id_canal={self.id_canal},nome_video={self.nome_video},titulo_video={self.titulo_video},comentario_sumarizado={self.comentario_sumarizado}]'
         )

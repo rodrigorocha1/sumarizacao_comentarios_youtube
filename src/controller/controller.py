@@ -1,3 +1,4 @@
+from typing import Union
 from src.model.youtube_api import YoutubeService
 from src.model.video_model import VideoModel
 from src.model.canal_model import CanalModel
@@ -9,41 +10,37 @@ class Controller:
         self.__video_model = VideoModel()
         self.__canal_model = CanalModel()
 
-    def verificar_video_cadastrado(self, id_video: str) -> bool:
+    def verificar_video_cadastrado(self, id_video: str) -> Union[bool, list]:
         """Método para verificar vídeo cadastrado
 
         Args:
-            id_video (str): id do vídeo 
+            id_video (str): id do vídeo
 
         Returns:
             bool: True se o vídeo está cadastrado false caso contrário
         """
-        if not self.__video_model.selecionar_video(id_video=id_video):
-            return True
-        else:
+        dados_video_banco = self.__video_model.selecionar_video(
+            id_video=id_video
+        )
+
+        if dados_video_banco is None:
             dados_video = self.__youtube_service.obter_detalhes_video(
                 id_video=id_video
             )
             self.__canal_model.inserir_canal(
-                id_canal=dados_video[1],
+                id_canal=dados_video[0],
                 nome_canal=dados_video[2]
             )
+            return dados_video
+
+        else:
             return False
 
-    # def inserir_dados(self, id_video: str):
-        # dados_video = self.__youtube_service.obter_detalhes_video(
-        #     id_video=id_video
-        # )
-        # # Verificar se o canal existe
+    def inserir_dados_video(self, dados_video: tuple, id_video: str):
 
-        # canal =
-        # self.__canal_model.inserir_canal(
-        #     id_canal=dados_video[1],
-        #     nome_canal=dados_video[2]
-        # )
-        # if canal:
-        #     comentarios = self.__youtube_service
-        #     self.__video_model.inserir_video(
-        #         id_video=id_video,
-
-        #     )
+        self.__video_model.inserir_video(
+            id_canal=dados_video[0],
+            id_video=id_video,
+            titulo_video=dados_video[2],
+            comentario_sumarizado=None
+        )

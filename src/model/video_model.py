@@ -1,3 +1,5 @@
+from typing import Optional
+from src.model.canais import Canais
 from src.model.video import Video
 from src.model.conexao_banco import ConexaoBanco
 from sqlalchemy.orm.session import Session
@@ -11,7 +13,7 @@ class VideoModel:
     def obter_sessao(self) -> Session:
         return self.__db.obter_sessao()
 
-    def inserir_video(self, id_video: str, id_canal: str, titulo_video_string: str, comentario_sumarizado: str):
+    def inserir_video(self, id_video: str, id_canal: str, titulo_video: str, comentario_sumarizado: str):
         """Método para inserir vídeo
 
         Args:
@@ -24,14 +26,14 @@ class VideoModel:
         video = Video(
             id_video=id_video,
             id_canal=id_canal,
-            titulo_video_string=titulo_video_string,
+            titulo_video=titulo_video,
             comentario_sumarizado=comentario_sumarizado
         )
         sessao.add(video)
         sessao.commit()
         sessao.close()
 
-    def selecionar_video(self, id_video: str) -> str:
+    def selecionar_video(self, id_video: str) -> Optional[tuple[Canais, Video]]:
         """Método para selecionar vídeo id
 
         Args:
@@ -41,9 +43,15 @@ class VideoModel:
             str: título do vídeo
         """
         sessao = self.obter_sessao()
-        video = sessao.query(Video).filter(
+        video = sessao.query(
+            Canais,
+            Video
+        ).join(
+            Video, Canais.id_canal == Video.id_video
+        ).filter(
             Video.id_video == id_video
         ).first()
-        print(video)
         sessao.close()
+        print(video)
+
         return video

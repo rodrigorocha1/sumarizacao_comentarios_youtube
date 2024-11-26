@@ -1,5 +1,6 @@
-from typing import Optional
+from typing import Optional, Tuple
 from src.model.canais import Canais
+from src.model.video import Video
 from src.model.conexao_banco import ConexaoBanco
 from sqlalchemy.orm.session import Session
 
@@ -26,14 +27,15 @@ class CanalModel:
         sessao.commit()
         sessao.close()
 
-    def selecionar_canal_id(self, id_canal: str) -> Optional[str]:
+    def selecionar_canal_id(self, id_canal: str) -> Optional[Tuple[Canais, Video]]:
         sessao = self.obter_sessao()
         canal = sessao.query(
-            Canais
+            Canais,
+            Video
+        ).join(
+            Video, Canais.id_canal == Video.id_video
         ).filter(
             Canais.id_canal == id_canal
         ).first()
 
-        if canal:
-            return str(canal.id_canal)
-        return None
+        return canal
