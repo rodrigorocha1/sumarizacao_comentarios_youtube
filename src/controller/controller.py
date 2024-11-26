@@ -79,20 +79,27 @@ class Controller:
             id_comentario=None
         )
         for comentario in comentarios:
-            dados_resp_comentarios = self.__youtube_service.buscar_resposta_comentarios(
+
+            for dado in self.__youtube_service.buscar_resposta_comentarios(
                 id_comentario_parente=comentario.id_comentario
-            )
-            resultado_consulta_resposta = self.__resposta_comentarios.selecionar_resposta_comentarios(
-                id_resposta_comentarios=dados_resp_comentarios[0]
-            )
-            if resultado_consulta_resposta is not None:
-                self.__resposta_comentarios.inserir_resposta_comentarios(
-                    id_resposta_comentario=dados_resp_comentarios[0],
-                    data_atualizacao=dados_resp_comentarios[3],
-                    data_publicacao=dados_resp_comentarios[4],
-                    id_comentario=comentario.id_comentario,
-                    resposta_comentario=dados_resp_comentarios[1],
-                    resposta_comentario_atualizado=None,
-                    usuario=dados_resp_comentarios[2]
+            ):
+
+                resultado_consulta_resposta = self.__resposta_comentarios.selecionar_resposta_comentarios(
+                    id_resposta_comentarios=dado[0]
                 )
-            else:
+                if resultado_consulta_resposta is not None:
+                    self.__resposta_comentarios.inserir_resposta_comentarios(
+                        id_resposta_comentario=dado[0],
+                        data_atualizacao=dado[3],
+                        data_publicacao=dado[4],
+                        id_comentario=comentario.id_comentario,
+                        resposta_comentario=dado[1],
+                        resposta_comentario_atualizado=None,
+                        usuario=dado[2]
+                    )
+                else:
+                    self.__resposta_comentarios.atualizar_resposta_comentarios(
+                        id_resposta_comentario=dado[0],
+                        resposta_comentario_atualizado=dado[1],
+                        data_atualizacao=dado[3]
+                    )

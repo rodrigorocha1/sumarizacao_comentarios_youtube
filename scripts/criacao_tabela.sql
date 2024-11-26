@@ -40,7 +40,8 @@ CREATE table resposta_comentarios (
 
 
 SELECT *
-from comentarios c ;
+from comentarios 
+WHERE  id_comentario= 'UgzLwUQoo7fSUQNdQKp4AaABAg';
 
 SELECT *
 FROM canais c ;
@@ -48,8 +49,12 @@ FROM canais c ;
 SELECT *
 from videos v ;
 
+SELECT *
+from resposta_comentarios 
+order by resposta_comentario;
+
 
 DELETE 
-FROM canais 
+FROM resposta_comentarios 
 
 

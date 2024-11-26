@@ -39,13 +39,20 @@ class ComentariosModel:
         sessao.commit()
         sessao.close()
 
-    def selecionar_comentarios(self, id_comentario: str) -> Comentarios:
+    def selecionar_comentarios(self, id_comentario: str, id_video: str = None, flag: int = 1) -> Comentarios:
         sessao = self.obter_sessao()
-        comentarios = sessao.query(
-            Comentarios
-        ).filter(
-            Comentarios.id_comentario == id_comentario
-        ).first()
+        if flag == 1:
+            comentarios = sessao.query(
+                Comentarios
+            ).filter(
+                Comentarios.id_comentario == id_comentario
+            ).first()
+        else:
+            comentarios = sessao.query(
+                Comentarios
+            ).filter(
+                Comentarios.id_video == id_video
+            ).all()
         sessao.close()
         return comentarios
 
