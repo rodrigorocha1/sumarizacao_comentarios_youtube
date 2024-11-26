@@ -52,20 +52,21 @@ class Controller:
             dados_comentarios = self.__comentarios_model.selecionar_comentarios(
                 id_comentario=dados_videos_comentarios[0]
             )
-            if dados_videos_comentarios is not None:
+            print(dados_comentarios)
+            if dados_comentarios is not None:
                 self.__comentarios_model.inserir_comentarios(
-                    id_comentario=dados_comentarios[0],
+                    id_comentario=dados_videos_comentarios[0],
                     id_video=id_video,
-                    usuario=dados_comentarios[3],
-                    comentario=dados_comentarios[2],
+                    usuario=dados_videos_comentarios[2],
+                    comentario=dados_videos_comentarios[1],
                     comentario_atualizado=None,
-                    data_atualizacao=dados_comentarios[4],
-                    data_publicacao=dados_comentarios[3]
+                    data_atualizacao=dados_videos_comentarios[4],
+                    data_publicacao=dados_videos_comentarios[3]
                 )
             else:
                 self.__comentarios_model.atualizar_comentario(
                     id_comentario=dados_comentarios[0],
-                    comentario_atualizado=dados_comentarios[3],
+                    comentario_atualizado=dados_comentarios[1],
                     data_atualizacao=dados_comentarios[4]
                 )
 
