@@ -1,3 +1,4 @@
+from typing import List
 from src.model.conexao_banco import ConexaoBanco
 from sqlalchemy.orm.session import Session
 from src.model.resposta_comentarios import RespostaComentarios
@@ -26,7 +27,7 @@ class RespostaComentariosModel:
         sessao.commit()
         sessao.close()
 
-    def selecionar_resposta_comentarios(self, id_resposta_comentarios: str):
+    def selecionar_resposta_comentarios(self, id_resposta_comentarios: str) -> List[RespostaComentarios]:
         sessao = self.obter_sessao()
         resultado_resposta_comentarios = sessao.query(
             RespostaComentarios
@@ -44,5 +45,9 @@ class RespostaComentariosModel:
             RespostaComentarios.id_resposta_comentario == id_resposta_comentario
         ).first()
 
-        resposta_comentarios.resposta_comentario_atualizado
-        resposta_comentarios.data_atualizacao = data_atualizacao
+        if resposta_comentarios is not None:
+            resposta_comentarios.resposta_comentario_atualizado = resposta_comentario_atualizado
+            resposta_comentarios.data_atualizacao = data_atualizacao
+            sessao.commit()
+
+        sessao.close()

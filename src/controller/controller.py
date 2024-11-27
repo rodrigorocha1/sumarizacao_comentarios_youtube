@@ -1,4 +1,6 @@
-from typing import Union
+from typing import Tuple, Union
+from src.model.canais import Canais
+from src.model.video import Video
 from src.model.youtube_api import YoutubeService
 from src.model.video_model import VideoModel
 from src.model.canal_model import CanalModel
@@ -14,7 +16,7 @@ class Controller:
         self.__comentarios_model = ComentariosModel()
         self.__resposta_comentarios = RespostaComentariosModel()
 
-    def verificar_video_cadastrado(self, id_video: str):
+    def verificar_video_cadastrado(self, id_video: str) -> Union[Tuple[str, str, str], Tuple[Canais, Video]]:
         """Método para verificar vídeo cadastrado
 
         Args:

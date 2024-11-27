@@ -22,7 +22,7 @@ class DashboardView:
 
                 dados = self.__controller.verificar_video_cadastrado(
                     id_video=id_video)
-                if dados:
+                if len(dados) == 0:
                     self.__controller.inserir_dados_video(
                         dados_video=dados, id_video=id_video)
                     st.toast('Vídeo inserido com sucesso')
@@ -31,21 +31,10 @@ class DashboardView:
                         id_video=id_video)
                     self.__controller.tratar_dados_resposta_comentarios(
                         id_video=id_video)
+                    st.success(f'Vídeo {dados[1].titulo_video}')
                 else:
-                    st.warning(f'Vídeo {dados} já está cadastrado')
-                # with st.status('Pesquisando URL') as status:
-                #     st.write('Buscando dados canais relacionados a url')
-                #     if self.__controller.verificar_video_cadastrado(id_video=id_video):
-
-                #     else:
-
-                # sleep(2)
-                # status.update(
-                #     label='Pesquisa terminada',
-                #     state='complete'
-                # )
-
-                # st.write(url)
+                    st.warning(
+                        f'Vídeo {dados[1].titulo_video} já está cadastrado')
 
     def rodar_dashboard(self):
         self.gerar_layout_titulo()
