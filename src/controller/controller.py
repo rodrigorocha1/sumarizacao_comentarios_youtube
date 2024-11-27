@@ -35,7 +35,7 @@ class Controller:
                 id_canal=dados_video[0],
                 nome_canal=dados_video[1]
             )
-            return dados_video_banco, dados_video
+            return dados_video
 
         else:
             return False
