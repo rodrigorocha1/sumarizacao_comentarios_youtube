@@ -33,7 +33,7 @@ class Controller:
             )
             self.__canal_model.inserir_canal(
                 id_canal=dados_video[0],
-                nome_canal=dados_video[2]
+                nome_canal=dados_video[1]
             )
             return dados_video_banco, dados_video
 
@@ -45,7 +45,7 @@ class Controller:
         self.__video_model.inserir_video(
             id_canal=dados_video[0],
             id_video=id_video,
-            titulo_video=dados_video[2],
+            titulo_video=dados_video[1],
             comentario_sumarizado=None
         )
 
@@ -54,8 +54,7 @@ class Controller:
             dados_comentarios = self.__comentarios_model.selecionar_comentarios(
                 id_comentario=dados_videos_comentarios[0]
             )
-            print(dados_comentarios)
-            if dados_comentarios is not None:
+            if dados_comentarios is None:
                 self.__comentarios_model.inserir_comentarios(
                     id_comentario=dados_videos_comentarios[0],
                     id_video=id_video,

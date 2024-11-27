@@ -47,7 +47,7 @@ class VideoModel:
             Canais,
             Video
         ).join(
-            Video, Canais.id_canal == Video.id_video
+            Video, Canais.id_canal == Video.id_canal
         ).filter(
             Video.id_video == id_video
         ).first()

@@ -23,5 +23,5 @@ class Video(Base):
 
     def __repr__(self):
         return (
-            f'Videos[id_video={self.id_video},id_canal={self.id_canal},nome_video={self.nome_video},titulo_video={self.titulo_video},comentario_sumarizado={self.comentario_sumarizado}]'
+            f'Videos[id_video={self.id_video},id_canal={self.id_canal},titulo_video={self.titulo_video},comentario_sumarizado={self.comentario_sumarizado}]'
         )
