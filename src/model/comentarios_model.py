@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional, Union
 from src.model.comentarios import Comentarios
 from src.model.conexao_banco import ConexaoBanco
 from sqlalchemy.orm.session import Session
@@ -39,20 +39,23 @@ class ComentariosModel:
         sessao.commit()
         sessao.close()
 
-    def selecionar_comentarios(self, id_comentario: str, id_video: str = None, flag: int = 1) -> Comentarios:
+    def selecionar_comentario_por_id(self, id_comentario: str) -> Optional[Comentarios]:
         sessao = self.obter_sessao()
-        if flag == 1:
-            comentarios = sessao.query(
-                Comentarios
-            ).filter(
-                Comentarios.id_comentario == id_comentario
-            ).first()
-        else:
-            comentarios = sessao.query(
-                Comentarios
-            ).filter(
-                Comentarios.id_video == id_video
-            ).all()
+        comentario = sessao.query(
+            Comentarios
+        ).filter(
+            Comentarios.id_comentario == id_comentario
+        ).first()
+        sessao.close()
+        return comentario
+
+    def selecionar_comentarios_por_video(self, id_video: str) -> List[Comentarios]:
+        sessao = self.obter_sessao()
+        comentarios = sessao.query(
+            Comentarios
+        ).filter(
+            Comentarios.id_video == id_video
+        ).all()
         sessao.close()
         return comentarios
 
@@ -63,5 +66,6 @@ class ComentariosModel:
         ).filter(
             Comentarios.id_comentario == id_comentario
         ).first()
-        comentario.comentario_atualizado = comentario_atualizado
-        comentario.data_atualizacao = data_atualizacao
+        if comentario is not None:
+            comentario.comentario_atualizado = comentario_atualizado
+            comentario.data_atualizacao = data_atualizacao

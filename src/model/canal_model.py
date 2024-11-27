@@ -38,4 +38,6 @@ class CanalModel:
             Canais.id_canal == id_canal
         ).first()
 
-        return canal
+        if canal:
+            return canal[0], canal[1]
+        return None
