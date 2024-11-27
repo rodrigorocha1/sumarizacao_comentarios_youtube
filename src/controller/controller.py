@@ -14,7 +14,7 @@ class Controller:
         self.__comentarios_model = ComentariosModel()
         self.__resposta_comentarios = RespostaComentariosModel()
 
-    def verificar_video_cadastrado(self, id_video: str) -> Union[bool, list]:
+    def verificar_video_cadastrado(self, id_video: str):
         """Método para verificar vídeo cadastrado
 
         Args:
@@ -38,14 +38,14 @@ class Controller:
             return dados_video
 
         else:
-            return False
+            return dados_video_banco
 
     def inserir_dados_video(self, dados_video: tuple, id_video: str):
 
         self.__video_model.inserir_video(
             id_canal=dados_video[0],
             id_video=id_video,
-            titulo_video=dados_video[1],
+            titulo_video=dados_video[2],
             comentario_sumarizado=None
         )
 
