@@ -53,7 +53,7 @@ class Controller:
 
     def tratar_dados_comentarios(self, id_video: str):
         for dados_videos_comentarios in self.__youtube_service.buscar_comentarios(id_video=id_video):
-            dados_comentarios = self.__comentarios_model.selecionar_comentarios(
+            dados_comentarios = self.__comentarios_model.selecionar_comentario_por_id(
                 id_comentario=dados_videos_comentarios[0]
             )
             if dados_comentarios is None:
@@ -74,8 +74,8 @@ class Controller:
                 )
 
     def tratar_dados_resposta_comentarios(self, id_video: str):
-        comentarios = self.__comentarios_model.selecionar_comentarios(
-            flag=2,
+        comentarios = self.__comentarios_model.selecionar_comentarios_por_video(
+
             id_video=id_video,
             id_comentario=None
         )
