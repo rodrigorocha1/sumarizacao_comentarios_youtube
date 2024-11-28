@@ -27,16 +27,28 @@ class CanalModel:
         sessao.commit()
         sessao.close()
 
-    def selecionar_canal_id(self, id_canal: str) -> Optional[Tuple[Canais, Video]]:
+    def selecionar_canal_id(self, id_canal: str, nome_canal: str, flag: int = 1) -> Optional[Tuple[Canais, Video]]:
         sessao = self.obter_sessao()
-        canal = sessao.query(
-            Canais,
-            Video
-        ).join(
-            Video, Canais.id_canal == Video.id_canal
-        ).filter(
-            Canais.id_canal == id_canal
-        ).first()
+        if flag == 1:
+
+            canal = sessao.query(
+                Canais,
+                Video
+            ).join(
+                Video, Canais.id_canal == Video.id_canal
+            ).filter(
+                Canais.id_canal == id_canal
+            ).first()
+        else:
+            canal = sessao.query(
+                Canais,
+                Video
+            ).join(
+                Video, Canais.id_canal == Video.id_canal
+            ).filter(
+                Canais.nome_canal == nome_canal
+            ).all()
+
         sessao.close()
         if canal:
             return canal[0], canal[1]
