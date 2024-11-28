@@ -1,4 +1,6 @@
 from typing import List, Optional, Tuple
+
+from sqlalchemy import Row
 from src.model.canais import Canais
 from src.model.video import Video
 from src.model.conexao_banco import ConexaoBanco
@@ -27,7 +29,7 @@ class CanalModel:
         sessao.commit()
         sessao.close()
 
-    def selecionar_video_canal_nome(self, nome_canal: str) -> Optional[Tuple[Canais, Video]]:
+    def selecionar_video_canal_nome(self, nome_canal: str) -> List[Row[Tuple[Canais, Video]]]:
         sessao = self.obter_sessao()
 
         canal = sessao.query(
@@ -37,12 +39,10 @@ class CanalModel:
             Video, Canais.id_canal == Video.id_canal
         ).filter(
             Canais.nome_canal == nome_canal
-        ).first()
+        ).all()
 
         sessao.close()
-        if canal:
-            return canal[0], canal[1]
-        return None
+        return canal
 
     def selecionar_canal_id(self, id_canal: str) -> Optional[Tuple[Canais, Video]]:
         sessao = self.obter_sessao()

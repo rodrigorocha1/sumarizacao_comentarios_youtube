@@ -41,10 +41,19 @@ class DashboardView:
 
     def gerar_layout_atualizar_video(self):
         canais = self.__controller.listar_inputs_canais_videos()
+        st.subheader('Atualizar comentários')
         with st.container(border=True):
             canal = st.selectbox(
                 label='Escolha o canal',
                 options=canais,
+                key=1
+            )
+            nome_videos = self.__controller.listar_input_video_canal(
+                nome_canal=canal)
+
+            videos = st.selectbox(
+                label='Escolha o vídeo',
+                options=nome_videos,
                 key=1
             )
 
