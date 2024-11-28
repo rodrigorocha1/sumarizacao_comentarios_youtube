@@ -54,7 +54,7 @@ class DashboardView:
             videos = st.selectbox(
                 label='Escolha o vídeo',
                 options=nome_videos,
-                key=1
+                key=2
             )
 
     def rodar_dashboard(self):
