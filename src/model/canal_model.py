@@ -33,7 +33,7 @@ class CanalModel:
             Canais,
             Video
         ).join(
-            Video, Canais.id_canal == Video.id_video
+            Video, Canais.id_canal == Video.id_canal
         ).filter(
             Canais.id_canal == id_canal
         ).first()
