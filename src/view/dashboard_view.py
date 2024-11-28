@@ -12,9 +12,10 @@ class DashboardView:
     def __init__(self):
         self.__controller = Controller()
 
-    def gerar_layout_titulo(self):
+    def gerar_layout_cadastrar_video(self):
         st.header('Sumarização Comentários youtube')
         with st.container(border=True):
+            st.subheader('Espaço para cadastrar vídeo')
             url = st.text_input('Digite a url do vídeo')
             botao_pesquisar = st.button('Recuperar comentários')
             if botao_pesquisar:
@@ -36,5 +37,10 @@ class DashboardView:
                     st.warning(
                         f'Vídeo {dados[1].titulo_video} já está cadastrado')
 
+    def gerar_layout_atualizar_video(self):
+        canal = self.__controller.listar_inputs_canais_videos()
+        print(canal[0].id_canal)
+
     def rodar_dashboard(self):
-        self.gerar_layout_titulo()
+        self.gerar_layout_cadastrar_video()
+        self.gerar_layout_atualizar_video()

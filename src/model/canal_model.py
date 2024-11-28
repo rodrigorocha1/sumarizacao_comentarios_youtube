@@ -1,4 +1,4 @@
-from typing import Optional, Tuple
+from typing import List, Optional, Tuple
 from src.model.canais import Canais
 from src.model.video import Video
 from src.model.conexao_banco import ConexaoBanco
@@ -37,7 +37,15 @@ class CanalModel:
         ).filter(
             Canais.id_canal == id_canal
         ).first()
-
+        sessao.close()
         if canal:
             return canal[0], canal[1]
         return None
+
+    def listar_todos_os_canais(self) -> List[Canais]:
+        sessao = self.obter_sessao()
+        canal = sessao.query(
+            Canais.id_canal, Canais.nome_canal
+        ).all()
+
+        return canal

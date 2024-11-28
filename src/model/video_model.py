@@ -1,4 +1,6 @@
-from typing import Optional
+from typing import Optional, Tuple
+
+from sqlalchemy import Row
 from src.model.canais import Canais
 from src.model.video import Video
 from src.model.conexao_banco import ConexaoBanco
@@ -33,7 +35,7 @@ class VideoModel:
         sessao.commit()
         sessao.close()
 
-    def selecionar_video(self, id_video: str) -> Optional[tuple[Canais, Video]]:
+    def selecionar_video(self, id_video: str) -> Optional[Tuple[Canais, Video]]:
         """Método para selecionar vídeo id
 
         Args:
@@ -43,7 +45,7 @@ class VideoModel:
             str: título do vídeo
         """
         sessao = self.obter_sessao()
-        video = sessao.query(
+        canais_video = sessao.query(
             Canais,
             Video
         ).join(
@@ -52,5 +54,7 @@ class VideoModel:
             Video.id_video == id_video
         ).first()
         sessao.close()
+        if canais_video:
 
-        return video
+            return canais_video[0], canais_video[1]
+        return None

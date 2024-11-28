@@ -33,10 +33,14 @@ class Controller:
             dados_video = self.__youtube_service.obter_detalhes_video(
                 id_video=id_video
             )
-            self.__canal_model.inserir_canal(
-                id_canal=dados_video[0],
-                nome_canal=dados_video[1]
-            )
+
+            canal_dados = self.__canal_model.selecionar_canal_id(
+                id_canal=dados_video[0])
+            if canal_dados is None:
+                self.__canal_model.inserir_canal(
+                    id_canal=dados_video[0],
+                    nome_canal=dados_video[1]
+                )
             return dados_video
 
         else:
@@ -75,9 +79,7 @@ class Controller:
 
     def tratar_dados_resposta_comentarios(self, id_video: str):
         comentarios = self.__comentarios_model.selecionar_comentarios_por_video(
-
-            id_video=id_video,
-            id_comentario=None
+            id_video=id_video
         )
         for comentario in comentarios:
 
@@ -104,3 +106,8 @@ class Controller:
                         resposta_comentario_atualizado=dado[1],
                         data_atualizacao=dado[3]
                     )
+
+    def listar_inputs_canais_videos(self) -> Tuple[Canais]:
+        lista_canais = self.__canal_model.listar_todos_os_canais()
+        print(*lista_canais)
+        return tuple(lista_canais)
