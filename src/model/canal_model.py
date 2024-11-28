@@ -45,7 +45,7 @@ class CanalModel:
     def listar_todos_os_canais(self) -> List[Canais]:
         sessao = self.obter_sessao()
         canal = sessao.query(
-            Canais.id_canal, Canais.nome_canal
+            Canais
         ).all()
 
         return canal

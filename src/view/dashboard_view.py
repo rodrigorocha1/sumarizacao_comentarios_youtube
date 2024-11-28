@@ -17,13 +17,15 @@ class DashboardView:
         with st.container(border=True):
             st.subheader('Espaço para cadastrar vídeo')
             url = st.text_input('Digite a url do vídeo')
+            # Validar url
             botao_pesquisar = st.button('Recuperar comentários')
             if botao_pesquisar:
                 id_video = url.split('=')[1].split('&')[0]
 
                 dados = self.__controller.verificar_video_cadastrado(
                     id_video=id_video)
-                if len(dados) == 0:
+
+                if len(dados) > 0 and dados is not None:
                     self.__controller.inserir_dados_video(
                         dados_video=dados, id_video=id_video)
                     st.toast('Vídeo inserido com sucesso')
@@ -32,14 +34,19 @@ class DashboardView:
                         id_video=id_video)
                     self.__controller.tratar_dados_resposta_comentarios(
                         id_video=id_video)
-                    st.success(f'Vídeo {dados}')
+                    st.success(f'Vídeo {dados[2]} cadastrado com sucesso')
                 else:
                     st.warning(
-                        f'Vídeo {dados[1].titulo_video} já está cadastrado')
+                        f'Vídeo {dados[2]} já está cadastrado')
 
     def gerar_layout_atualizar_video(self):
-        canal = self.__controller.listar_inputs_canais_videos()
-        print(canal[0].id_canal)
+        canais = self.__controller.listar_inputs_canais_videos()
+        with st.container(border=True):
+            canal = st.selectbox(
+                label='Escolha o canal',
+                options=canais,
+                key=1
+            )
 
     def rodar_dashboard(self):
         self.gerar_layout_cadastrar_video()

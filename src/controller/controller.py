@@ -1,4 +1,4 @@
-from typing import Tuple, Union
+from typing import Optional, Tuple, Union
 from src.model.canais import Canais
 from src.model.video import Video
 from src.model.youtube_api import YoutubeService
@@ -16,7 +16,7 @@ class Controller:
         self.__comentarios_model = ComentariosModel()
         self.__resposta_comentarios = RespostaComentariosModel()
 
-    def verificar_video_cadastrado(self, id_video: str) -> Union[Tuple[str, str, str], Tuple[Canais, Video]]:
+    def verificar_video_cadastrado(self, id_video: str) -> Optional[Tuple[str, str, str]]:
         """Método para verificar vídeo cadastrado
 
         Args:
@@ -42,9 +42,6 @@ class Controller:
                     nome_canal=dados_video[1]
                 )
             return dados_video
-
-        else:
-            return dados_video_banco
 
     def inserir_dados_video(self, dados_video: tuple, id_video: str):
 
@@ -108,6 +105,10 @@ class Controller:
                     )
 
     def listar_inputs_canais_videos(self) -> Tuple[Canais]:
+
         lista_canais = self.__canal_model.listar_todos_os_canais()
-        print(*lista_canais)
-        return tuple(lista_canais)
+        nome_canais = tuple(canal.nome_canal for canal in lista_canais)
+        return nome_canais
+
+    def listar_input_video_canal(selfnome_canal: str):
+        id_canal = self.
