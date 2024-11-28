@@ -32,7 +32,7 @@ class DashboardView:
                         id_video=id_video)
                     self.__controller.tratar_dados_resposta_comentarios(
                         id_video=id_video)
-                    st.success(f'Vídeo {dados[1].titulo_video}')
+                    st.success(f'Vídeo {dados}')
                 else:
                     st.warning(
                         f'Vídeo {dados[1].titulo_video} já está cadastrado')
