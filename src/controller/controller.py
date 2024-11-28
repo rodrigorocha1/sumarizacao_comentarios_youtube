@@ -110,5 +110,5 @@ class Controller:
         nome_canais = tuple(canal.nome_canal for canal in lista_canais)
         return nome_canais
 
-    def listar_input_video_canal(selfnome_canal: str):
-        id_canal = self.
+    def listar_input_video_canal(self, nome_canal: str):
+        id_canal = self.__canal_model.selecionar_can
