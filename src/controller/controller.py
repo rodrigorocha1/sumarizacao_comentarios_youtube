@@ -119,3 +119,8 @@ class Controller:
             dados[1].titulo_video for dados in dados_canal_video
         )
         return nome_videos
+
+    def fazer_sumarizacao_comentarios(self, nome_video: str):
+        resultado = self.__resposta_comentarios.selecionar_comentarios_nome_video(
+            nome_video=nome_video)
+        return resultado

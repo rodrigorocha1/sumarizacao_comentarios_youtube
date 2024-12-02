@@ -1,7 +1,10 @@
-from typing import List
+from typing import List, Tuple
 from src.model.conexao_banco import ConexaoBanco
 from sqlalchemy.orm.session import Session
 from src.model.resposta_comentarios import RespostaComentarios
+from src.model.comentarios import Comentarios
+from sqlalchemy import select, union_all
+from src.model.video import Video
 
 
 class RespostaComentariosModel:
@@ -51,3 +54,25 @@ class RespostaComentariosModel:
             sessao.commit()
 
         sessao.close()
+
+    def selecionar_comentarios_nome_video(self, nome_video: str) -> List[Tuple[str, str]]:
+        sessao = self.obter_sessao()
+        consulta_um = (
+            select(Comentarios.comentario, Comentarios.usuario)
+            .join(Video, Comentarios.id_video == Video.id_video)
+            .where(
+                Video.titulo_video == nome_video
+            )
+        )
+
+        consulta_dois = (
+            select(RespostaComentarios.resposta_comentario,
+                   RespostaComentarios.id_resposta_comentario)
+            .join(Comentarios, Comentarios.id_comentario == RespostaComentarios.id_comentario)
+            .join(Video, Comentarios.id_video == Video.id_video)
+            .where(Video.titulo_video == nome_video)
+        )
+
+        comentarios_usuarios = union_all(consulta_um, consulta_dois)
+        resultado = sessao.execute(comentarios_usuarios).fetchall()
+        return resultado
