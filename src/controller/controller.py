@@ -38,6 +38,7 @@ class Controller:
 
             canal_dados = self.__canal_model.selecionar_canal_id(
                 id_canal=dados_video[0])
+            self.__fa
             if canal_dados is None:
                 self.__canal_model.inserir_canal(
                     id_canal=dados_video[0],
@@ -107,6 +108,7 @@ class Controller:
                         resposta_comentario_atualizado=dado[1],
                         data_atualizacao=dado[3]
                     )
+        self.fazer_sumarizacao_comentarios(id_video)
 
     def listar_inputs_canais_videos(self) -> Tuple[Canais]:
 
@@ -124,15 +126,13 @@ class Controller:
         )
         return nome_videos
 
-    def fazer_sumarizacao_comentarios(self, nome_video: str):
+    def fazer_sumarizacao_comentarios(self, id_video: str):
         resultado = self.__resposta_comentarios.selecionar_comentarios_nome_video(
-            nome_video=nome_video)
+            id_video=id_video)
 
         texto_completo = "\n\n".join(
             [f"Comentário: {texto}\nUsuário: {usuario}" for texto, usuario in resultado])
 
         transcricao = self.__ia_agente.gerar_resumo(texto=texto_completo)
         self.__video_model.atualizar_video_transcricao(
-            nome_video=nome_video, transcricao=transcricao)
-
-        return transcricao
+            id_video=id_video, transcricao=transcricao)

@@ -55,13 +55,13 @@ class RespostaComentariosModel:
 
         sessao.close()
 
-    def selecionar_comentarios_nome_video(self, nome_video: str) -> List[Tuple[str, str]]:
+    def selecionar_comentarios_nome_video(self, id_video: str) -> List[Tuple[str, str]]:
         sessao = self.obter_sessao()
         consulta_um = (
             select(Comentarios.comentario_atualizado, Comentarios.usuario)
             .join(Video, Comentarios.id_video == Video.id_video)
             .where(
-                Video.titulo_video == nome_video
+                Video.id_video == id_video
             )
         )
 
@@ -70,7 +70,7 @@ class RespostaComentariosModel:
                    RespostaComentarios.usuario)
             .join(Comentarios, Comentarios.id_comentario == RespostaComentarios.id_comentario)
             .join(Video, Comentarios.id_video == Video.id_video)
-            .where(Video.titulo_video == nome_video)
+            .where(Video.id_video == id_video)
         )
 
         comentarios_usuarios = union_all(consulta_um, consulta_dois)

@@ -35,12 +35,12 @@ class VideoModel:
         sessao.commit()
         sessao.close()
 
-    def atualizar_video_transcricao(self, nome_video: str, transcricao: str):
+    def atualizar_video_transcricao(self, id_video: str, transcricao: str):
         sessao = self.obter_sessao()
         video = sessao.query(
             Video
         ).filter(
-            Video.titulo_video == nome_video
+            Video.id_video == id_video
         ).first()
 
         video.comentario_sumarizado = transcricao

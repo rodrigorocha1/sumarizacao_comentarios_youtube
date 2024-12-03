@@ -6,7 +6,8 @@ from src.controller.controller import Controller
 class DashboardView:
     st.set_page_config(
         layout='wide',
-        page_title='Sumarização Comentários youtube'
+        page_title='Sumarização Comentários youtube',
+
     )
 
     def __init__(self):
@@ -18,7 +19,10 @@ class DashboardView:
             st.subheader('Espaço para cadastrar vídeo')
             url = st.text_input('Digite a url do vídeo')
             # Validar url
-            botao_pesquisar = st.button('Recuperar comentários')
+            botao_pesquisar = st.button(
+                'Recuperar comentários',
+                key=1
+            )
             if botao_pesquisar:
                 id_video = url.split('=')[1].split('&')[0]
 
@@ -46,7 +50,7 @@ class DashboardView:
             canal = st.selectbox(
                 label='Escolha o canal',
                 options=canais,
-                key=1
+                key=2
             )
             nome_videos = self.__controller.listar_input_video_canal(
                 nome_canal=canal)
@@ -54,9 +58,17 @@ class DashboardView:
             videos = st.selectbox(
                 label='Escolha o vídeo',
                 options=nome_videos,
-                key=2
+                key=3
             )
+            botao = st.button(
+                label=f'Atualizar dados do vídeo {videos}',
+                key=4
+            )
+            if botao:
+                return videos
+
+        def gerar_la
 
     def rodar_dashboard(self):
         self.gerar_layout_cadastrar_video()
-        self.gerar_layout_atualizar_video()
+        videos = self.gerar_layout_atualizar_video()
