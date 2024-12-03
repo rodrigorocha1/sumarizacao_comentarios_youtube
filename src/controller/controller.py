@@ -125,8 +125,6 @@ class Controller:
     def fazer_sumarizacao_comentarios(self, nome_video: str):
         resultado = self.__resposta_comentarios.selecionar_comentarios_nome_video(
             nome_video=nome_video)
-        print(resultado)
-        print('*' * 20)
 
         texto_completo = "\n\n".join(
             [f"Comentário: {texto}\nUsuário: {usuario}" for texto, usuario in resultado])

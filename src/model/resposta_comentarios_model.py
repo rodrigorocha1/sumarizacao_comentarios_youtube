@@ -67,7 +67,7 @@ class RespostaComentariosModel:
 
         consulta_dois = (
             select(RespostaComentarios.resposta_comentario,
-                   RespostaComentarios.id_resposta_comentario)
+                   RespostaComentarios.usuario)
             .join(Comentarios, Comentarios.id_comentario == RespostaComentarios.id_comentario)
             .join(Video, Comentarios.id_video == Video.id_video)
             .where(Video.titulo_video == nome_video)

@@ -21,6 +21,10 @@ class IaAgenteGemini:
                 f""" 
                     Você tem experiência em criar tópicos dos comentários dos videos do youtube da transcrição dos vídeos do youtube ,  
                     gere tópicos sobre as  reações da comunidade . 
+                    Exemplo:
+                    Título do tópico
+                    
+                    Texto do tópico
                 
                     Formate em markdown com a seguinte estrutura, vai ter um título e depois um resumo com base no título gerado
                 """),
