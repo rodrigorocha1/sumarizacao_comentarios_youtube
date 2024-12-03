@@ -69,3 +69,5 @@ class ComentariosModel:
         if comentario is not None:
             comentario.comentario_atualizado = comentario_atualizado
             comentario.data_atualizacao = data_atualizacao
+        sessao.commit()
+        sessao.close()
