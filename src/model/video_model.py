@@ -35,6 +35,18 @@ class VideoModel:
         sessao.commit()
         sessao.close()
 
+    def atualizar_video_transcricao(self, nome_video: str, transcricao: str):
+        sessao = self.obter_sessao()
+        video = sessao.query(
+            Video
+        ).filter(
+            Video.titulo_video == nome_video
+        ).first()
+
+        video.comentario_sumarizado = transcricao
+        sessao.commit()
+        sessao.close()
+
     def selecionar_video(self, id_video: str) -> Optional[Tuple[Canais, Video]]:
         """Método para selecionar vídeo id
 

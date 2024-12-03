@@ -1,4 +1,4 @@
-from typing import Optional, Tuple, Union
+from typing import Literal, Optional, Tuple, Union
 from src.model.canais import Canais
 
 from src.model.youtube_api import YoutubeService
@@ -18,7 +18,7 @@ class Controller:
         self.__resposta_comentarios = RespostaComentariosModel()
         self.__ia_agente = IaAgenteGemini()
 
-    def verificar_video_cadastrado(self, id_video: str) -> Optional[Tuple[str, str, str]]:
+    def verificar_video_cadastrado(self, id_video: str) -> Union[Optional[Tuple[str, str, str]], Literal[False]]:
         """Método para verificar vídeo cadastrado
 
         Args:
@@ -44,6 +44,7 @@ class Controller:
                     nome_canal=dados_video[1]
                 )
             return dados_video
+        return False
 
     def inserir_dados_video(self, dados_video: tuple, id_video: str):
 
@@ -65,7 +66,7 @@ class Controller:
                     id_video=id_video,
                     usuario=dados_videos_comentarios[2],
                     comentario=dados_videos_comentarios[1],
-                    comentario_atualizado=None,
+                    comentario_atualizado=dados_videos_comentarios[1],
                     data_atualizacao=dados_videos_comentarios[4],
                     data_publicacao=dados_videos_comentarios[3]
                 )
@@ -130,6 +131,7 @@ class Controller:
             [f"Comentário: {texto}\nUsuário: {usuario}" for texto, usuario in resultado])
 
         transcricao = self.__ia_agente.gerar_resumo(texto=texto_completo)
+        self.__video_model.atualizar_video_transcricao(
+            nome_video=nome_video, transcricao=transcricao)
 
-        print(transcricao)
         return transcricao
