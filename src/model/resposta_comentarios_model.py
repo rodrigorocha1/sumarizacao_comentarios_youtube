@@ -55,7 +55,7 @@ class RespostaComentariosModel:
 
         sessao.close()
 
-    def selecionar_comentarios_nome_video(self, id_video: str) -> List[Tuple[str, str]]:
+    def selecionar_comentarios_id_video(self, id_video: str) -> List[Tuple[str, str]]:
         sessao = self.obter_sessao()
         consulta_um = (
             select(Comentarios.comentario_atualizado, Comentarios.usuario)

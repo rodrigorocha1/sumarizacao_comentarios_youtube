@@ -127,7 +127,7 @@ class Controller:
         return nome_videos
 
     def fazer_sumarizacao_comentarios(self, id_video: str):
-        resultado = self.__resposta_comentarios.selecionar_comentarios_nome_video(
+        resultado = self.__resposta_comentarios.selecionar_comentarios_id_video(
             id_video=id_video)
 
         texto_completo = "\n\n".join(
@@ -136,3 +136,9 @@ class Controller:
         transcricao = self.__ia_agente.gerar_resumo(texto=texto_completo)
         self.__video_model.atualizar_video_transcricao(
             id_video=id_video, transcricao=transcricao)
+
+    def selecionar_transcricao(self, nome_video: str) -> str:
+        transcricao = self.__video_model.selecionar_transcricao(
+            nome_video=nome_video
+        )
+        return transcricao.comentario_sumarizado

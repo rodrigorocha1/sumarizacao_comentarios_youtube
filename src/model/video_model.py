@@ -70,3 +70,13 @@ class VideoModel:
 
             return canais_video[0], canais_video[1]
         return None
+
+    def selecionar_transcricao(self, nome_video: str) -> Video:
+        sessao = self.obter_sessao()
+        video = sessao.query(
+            Video
+        ).filter(
+            Video.titulo_video == nome_video
+        ).first()
+        sessao.close()
+        return video
