@@ -142,3 +142,9 @@ class Controller:
             nome_video=nome_video
         )
         return transcricao.comentario_sumarizado
+
+    def obter_video_id_nome(self, nome_video: str) -> str:
+        video = self.__video_model.selecionar_transcricao(
+            nome_video=nome_video)
+        print(video.id_video)
+        return video.id_video

@@ -42,9 +42,8 @@ class DashboardView:
                 else:
                     st.warning(
                         f'Vídeo {dados[2]} já está cadastrado')
-                return id_video
 
-    def gerar_layout_atualizar_video(self, id_video: str):
+    def gerar_layout_atualizar_video(self):
         canais = self.__controller.listar_inputs_canais_videos()
         st.subheader('Atualizar comentários')
         with st.container(border=True):
@@ -66,18 +65,22 @@ class DashboardView:
                 key=4
             )
             if botao:
+                id_video = self.__controller.obter_video_id_nome(
+                    nome_video=videos)
                 self.__controller.tratar_dados_comentarios(id_video=id_video)
+                self.__controller.tratar_dados_resposta_comentarios(
+                    id_video=id_video)
             return videos
 
     def gerar_layout_transcricao(self, video: str):
         with st.container(border=True):
-            print(video)
+
             st.subheader('Tópicos dos comentários')
             transcricao = self.__controller.selecionar_transcricao(
                 nome_video=video)
             st.markdown(transcricao)
 
     def rodar_dashboard(self):
-        id_video = self.gerar_layout_cadastrar_video()
-        videos = self.gerar_layout_atualizar_video(id_video=id_video)
+        self.gerar_layout_cadastrar_video()
+        videos = self.gerar_layout_atualizar_video()
         self.gerar_layout_transcricao(video=videos)
