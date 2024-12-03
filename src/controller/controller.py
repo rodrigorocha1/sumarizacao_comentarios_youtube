@@ -71,10 +71,11 @@ class Controller:
                     data_publicacao=dados_videos_comentarios[3]
                 )
             else:
+                print(dados_comentarios)
                 self.__comentarios_model.atualizar_comentario(
-                    id_comentario=dados_comentarios[0],
-                    comentario_atualizado=dados_comentarios[1],
-                    data_atualizacao=dados_comentarios[4]
+                    id_comentario=dados_videos_comentarios[0],
+                    comentario_atualizado=dados_videos_comentarios[1],
+                    data_atualizacao=dados_videos_comentarios[4]
                 )
 
     def tratar_dados_resposta_comentarios(self, id_video: str):
@@ -90,7 +91,7 @@ class Controller:
                 resultado_consulta_resposta = self.__resposta_comentarios.selecionar_resposta_comentarios(
                     id_resposta_comentarios=dado[0]
                 )
-                if resultado_consulta_resposta is not None:
+                if len(resultado_consulta_resposta) == 0:
                     self.__resposta_comentarios.inserir_resposta_comentarios(
                         id_resposta_comentario=dado[0],
                         data_atualizacao=dado[3],
