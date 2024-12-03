@@ -1,4 +1,4 @@
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Union
 
 from sqlalchemy import Row
 from src.model.canais import Canais
@@ -37,15 +37,21 @@ class VideoModel:
 
     def atualizar_video_transcricao(self, id_video: str, transcricao: str):
         sessao = self.obter_sessao()
-        video = sessao.query(
-            Video
-        ).filter(
-            Video.id_video == id_video
-        ).first()
+        try:
+            video = sessao.query(
+                Video
+            ).filter(
+                Video.id_video == id_video
+            ).first()
 
-        video.comentario_sumarizado = transcricao
-        sessao.commit()
-        sessao.close()
+            if video is not None:
+                video.comentario_sumarizado = transcricao
+                sessao.commit()
+            else:
+
+                print(f"Vídeo com id {id_video} não encontrado.")
+        finally:
+            sessao.close()
 
     def selecionar_video(self, id_video: str) -> Optional[Tuple[Canais, Video]]:
         """Método para selecionar vídeo id
@@ -71,7 +77,7 @@ class VideoModel:
             return canais_video[0], canais_video[1]
         return None
 
-    def selecionar_transcricao(self, nome_video: str) -> Video:
+    def selecionar_transcricao(self, nome_video: str) -> Union[Video, None]:
         sessao = self.obter_sessao()
         video = sessao.query(
             Video
