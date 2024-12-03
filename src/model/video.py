@@ -1,4 +1,4 @@
-from sqlalchemy import String, ForeignKey
+from sqlalchemy import String, ForeignKey, Column
 from src.model.config_base import Base
 from sqlalchemy.orm import mapped_column, Mapped
 
@@ -15,11 +15,12 @@ class Video(Base):
         ForeignKey('Canais.id_canal')
 
     )
-    titulo_video: Mapped[str] = mapped_column(
-        String
-    )
+    titulo_video = Column(String)
 
-    comentario_sumarizado: Mapped[String] = mapped_column(String)
+    comentario_sumarizado: Mapped[str] = mapped_column(
+        String
+
+    )
 
     def __repr__(self):
         return (
