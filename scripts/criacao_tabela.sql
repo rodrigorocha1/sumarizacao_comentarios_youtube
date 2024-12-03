@@ -47,14 +47,30 @@ SELECT *
 FROM canais c ;
 
 SELECT *
-from videos v ;
+from videos v 
+where v.id_video = 'bnB7pyDfOaY';
 
 SELECT *
-from resposta_comentarios 
+from resposta_comentarios rc 
+INNER JOIN comentarios c on c.id_comentario  = rc.id_comentario 
+where id_video  = 'LCnsyNfaAk4'
 order by resposta_comentario;
 
 
-DELETE 
-FROM resposta_comentarios 
+SELECT *
+from canais c 
+INNER JOIN videos v on v.id_canal = 
 
+
+
+SELECT canais.*, videos.*
+FROM canais
+JOIN videos ON canais.id_canal = videos.id_video
+WHERE videos.id_video = 'bnB7pyDfOaY'
+LIMIT 1;
+
+DELETE FROM canais ;
+DELETE FROM comentarios;
+DELETE FROM videos;
+DELETE FROM resposta_comentarios;
 

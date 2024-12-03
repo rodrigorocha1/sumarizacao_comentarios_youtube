@@ -1,9 +1,9 @@
-from typing import List, Tuple
+from typing import Any, List, Sequence, Tuple
 from src.model.conexao_banco import ConexaoBanco
 from sqlalchemy.orm.session import Session
 from src.model.resposta_comentarios import RespostaComentarios
 from src.model.comentarios import Comentarios
-from sqlalchemy import select, union_all
+from sqlalchemy import Row, select, union_all
 from src.model.video import Video
 
 
@@ -55,7 +55,7 @@ class RespostaComentariosModel:
 
         sessao.close()
 
-    def selecionar_comentarios_id_video(self, id_video: str) -> List[Tuple[str, str]]:
+    def selecionar_comentarios_id_video(self, id_video: str) -> Sequence[Row[Any]]:
         sessao = self.obter_sessao()
         consulta_um = (
             select(Comentarios.comentario_atualizado, Comentarios.usuario)
@@ -74,5 +74,7 @@ class RespostaComentariosModel:
         )
 
         comentarios_usuarios = union_all(consulta_um, consulta_dois)
-        resultado = sessao.execute(comentarios_usuarios).fetchall()
+        resultado = sessao.execute(
+            comentarios_usuarios).fetchall()
+
         return resultado
