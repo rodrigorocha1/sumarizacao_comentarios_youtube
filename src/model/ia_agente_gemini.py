@@ -1,6 +1,8 @@
 from langchain_google_genai import ChatGoogleGenerativeAI
 import os
 import time
+from dotenv import load_dotenv
+load_dotenv()
 
 
 class IaAgenteGemini:
@@ -12,14 +14,15 @@ class IaAgenteGemini:
             temperature=1
         )
 
-    def gerar_resumo(self, texto: str, nome_canal: str, titulo_video: str) -> str:
+    def gerar_resumo(self, texto: str) -> str:
         messages = [
             (
                 'system',
                 f""" 
-                    Você tem experiência em criar tópicos dos comentários dos videos do youtube da transcrição dos vídeos do youtube n
+                    Você tem experiência em criar tópicos dos comentários dos videos do youtube da transcrição dos vídeos do youtube ,  
+                    gere tópicos sobre as  reações da comunidade . 
                 
-                    Formate em markdown para exibição em metade da página do navegador
+                    Formate em markdown com a seguinte estrutura, vai ter um título e depois um resumo com base no título gerado
                 """),
             ('human', texto),
         ]

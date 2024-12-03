@@ -1,11 +1,12 @@
 from typing import Optional, Tuple, Union
 from src.model.canais import Canais
-from src.model.video import Video
+
 from src.model.youtube_api import YoutubeService
 from src.model.video_model import VideoModel
 from src.model.canal_model import CanalModel
 from src.model.comentarios_model import ComentariosModel
 from src.model.resposta_comentarios_model import RespostaComentariosModel
+from src.model.ia_agente_gemini import IaAgenteGemini
 
 
 class Controller:
@@ -15,6 +16,7 @@ class Controller:
         self.__canal_model = CanalModel()
         self.__comentarios_model = ComentariosModel()
         self.__resposta_comentarios = RespostaComentariosModel()
+        self.__ia_agente = IaAgenteGemini()
 
     def verificar_video_cadastrado(self, id_video: str) -> Optional[Tuple[str, str, str]]:
         """Método para verificar vídeo cadastrado
@@ -123,4 +125,13 @@ class Controller:
     def fazer_sumarizacao_comentarios(self, nome_video: str):
         resultado = self.__resposta_comentarios.selecionar_comentarios_nome_video(
             nome_video=nome_video)
-        return resultado
+        print(resultado)
+        print('*' * 20)
+
+        texto_completo = "\n\n".join(
+            [f"Comentário: {texto}\nUsuário: {usuario}" for texto, usuario in resultado])
+
+        transcricao = self.__ia_agente.gerar_resumo(texto=texto_completo)
+
+        print(transcricao)
+        return transcricao
