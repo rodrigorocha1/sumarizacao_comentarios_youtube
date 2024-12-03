@@ -58,7 +58,7 @@ class RespostaComentariosModel:
     def selecionar_comentarios_nome_video(self, nome_video: str) -> List[Tuple[str, str]]:
         sessao = self.obter_sessao()
         consulta_um = (
-            select(Comentarios.comentario, Comentarios.usuario)
+            select(Comentarios.comentario_atualizado, Comentarios.usuario)
             .join(Video, Comentarios.id_video == Video.id_video)
             .where(
                 Video.titulo_video == nome_video
@@ -66,7 +66,7 @@ class RespostaComentariosModel:
         )
 
         consulta_dois = (
-            select(RespostaComentarios.resposta_comentario,
+            select(RespostaComentarios.resposta_comentario_atualizado,
                    RespostaComentarios.usuario)
             .join(Comentarios, Comentarios.id_comentario == RespostaComentarios.id_comentario)
             .join(Video, Comentarios.id_video == Video.id_video)
