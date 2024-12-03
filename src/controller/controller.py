@@ -38,7 +38,7 @@ class Controller:
 
             canal_dados = self.__canal_model.selecionar_canal_id(
                 id_canal=dados_video[0])
-            self.__fa
+
             if canal_dados is None:
                 self.__canal_model.inserir_canal(
                     id_canal=dados_video[0],
@@ -108,7 +108,7 @@ class Controller:
                         resposta_comentario_atualizado=dado[1],
                         data_atualizacao=dado[3]
                     )
-        self.fazer_sumarizacao_comentarios(id_video)
+        self.fazer_sumarizacao_comentarios(id_video=id_video)
 
     def listar_inputs_canais_videos(self) -> Tuple[Canais]:
 

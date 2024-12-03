@@ -67,8 +67,6 @@ class DashboardView:
             if botao:
                 return videos
 
-        def gerar_la
-
     def rodar_dashboard(self):
         self.gerar_layout_cadastrar_video()
         videos = self.gerar_layout_atualizar_video()
